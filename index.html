@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>祝妹丁生日快乐</title>
+    <title>妹丁生日快乐</title>
     <style>
         *{
             margin: 0;
@@ -11,7 +11,7 @@
         }
         html,body{
             height: 100%;
-            /* 优化背景图显示：固定+铺满，解决闪现问题 */
+            /* 稳定显示背景图，无闪现 */
             background: url('bg.png') center center / cover no-repeat fixed;
             /* 如果是jpeg格式，把上面的bg.jpg改成bg.jpeg */
             text-align: center;
@@ -41,11 +41,11 @@
             margin-bottom: 20px;
             letter-spacing: 5px;
         }
-        /* 照片轮播容器 */
+        /* 照片轮播容器：720px×720px（放大一倍） */
         .carousel-container{
             margin: 20px auto;
-            width: 360px;
-            height: 360px;
+            width: 720px;
+            height: 720px;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 0 25px rgba(177, 40, 90, 0.3);
@@ -55,10 +55,11 @@
             display: flex;
             transition: transform 0.8s ease;
         }
+        /* 照片尺寸同步放大 */
         .carousel-slide img{
-            width: 360px;
-            height: 360px;
-            object-fit: cover;
+            width: 720px;
+            height: 720px;
+            object-fit: cover; /* 保证图片不变形 */
             flex-shrink: 0;
         }
         .heart-main{
@@ -85,16 +86,9 @@
             font-size: 14px;
             margin-top: 10px;
         }
-        /* B站播放器：隐藏仅保留音频 */
-        #bilibili-player{
-            position: fixed;
-            bottom: -100px;
-            left: 0;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 2;
+        /* 隐藏的本地音乐播放器（仅后台播放） */
+        #local-music{
+            display: none; /* 隐藏播放器界面，只保留音频播放 */
         }
     </style>
 </head>
@@ -103,7 +97,7 @@
         <h1>✨ 生日快乐 ✨</h1>
         <div class="en-name">妹丁</div>
 
-        <!-- 11张照片轮播 -->
+        <!-- 11张照片轮播（720px） -->
         <div class="carousel-container">
             <div class="carousel-slide" id="carousel">
                 <img src="photo1.jpg" alt="照片1">
@@ -136,13 +130,8 @@
         <div class="time" id="nowTime"></div>
     </div>
 
-    <!-- B站音频播放器 -->
-    <iframe id="bilibili-player"
-            src="https://player.bilibili.com/player.html?bvid=BV1MP4y187LL&autoplay=1&loop=1&muted=1&danmaku=0&controls=0"
-            frameborder="0"
-            allow="autoplay; fullscreen; encrypted-media"
-            allowfullscreen>
-    </iframe>
+    <!-- 本地音乐播放器（核心修改：替换B站iframe） -->
+    <audio id="local-music" src="birthday.mp3" loop></audio>
 
 <script>
 // 日期显示
@@ -152,38 +141,36 @@ function showTime(){
 }
 showTime();
 
-// 照片轮播逻辑
+// 照片轮播逻辑（720px适配）
 const carousel = document.getElementById('carousel');
 let index = 0;
 const totalImages = 11;
+const photoWidth = 720;
 
 function carouselLoop() {
     index++;
     if (index >= totalImages) index = 0;
-    carousel.style.transform = `translateX(-${index * 360}px)`;
+    carousel.style.transform = `translateX(-${index * photoWidth}px)`;
 }
-// 初始执行+定时轮播
 carouselLoop();
 setInterval(carouselLoop, 2800);
 
-// B站音频播放控制
-const playerIframe = document.getElementById('bilibili-player');
+// 本地音乐播放逻辑（核心修改）
+const musicPlayer = document.getElementById('local-music');
 let isPlayed = false;
 
-document.addEventListener("click", async () => {
-    if (isPlayed) return;
-
-    try {
-        playerIframe.contentWindow.postMessage(JSON.stringify({
-            "cmd": "play",
-            "args": ["play"]
-        }), "*");
-        document.querySelector('.music-tip').innerText = "🎵 音乐正在播放 🎵";
-        isPlayed = true;
-    } catch (err) {
-        playerIframe.src = playerIframe.src + "&autoplay=1";
-        document.querySelector('.music-tip').innerText = "🎵 音乐正在播放 🎵";
-        isPlayed = true;
+// 点击页面播放音乐（仅第一次点击生效）
+document.addEventListener("click", () => {
+    if (!isPlayed) {
+        try {
+            // 播放本地音乐
+            musicPlayer.play();
+            document.querySelector('.music-tip').innerText = "🎵 音乐正在播放 🎵";
+            isPlayed = true;
+        } catch (err) {
+            // 兼容部分浏览器的自动播放限制
+            alert("请手动点击播放音乐：\n1. 刷新页面\n2. 再次点击页面任意位置");
+        }
     }
 }, { once: true });
 </script>
