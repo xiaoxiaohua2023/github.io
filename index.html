@@ -94,8 +94,8 @@
 </head>
 <body>
     <div class="content-wrapper">
-        <h1>✨ 十七姻缘路，芳华婉如初 ✨</h1>
-        <div class="en-name">回岁忆月</div>
+        <h1>十七姻缘路，芳华婉如初</h1>
+        <div class="en-name">曾忆起</div>
 
         <!-- 11张照片轮播（720px） -->
         <div class="carousel-container">
@@ -126,7 +126,7 @@
             </div>
         </div>
 
-        <div class="heart-main">❤</div>
+        <div class="heart-main"></div>
 
         <!-- 专属文案 -->
         <div class="wish">
@@ -137,7 +137,7 @@
         </div>
 
         <!-- 音乐播放提示 -->
-        <div class="music-tip">👉 点击页面任意位置播放音乐 👈</div>
+        <div class="music-tip"></div>
 
         <div class="time" id="nowTime"></div>
     </div>
@@ -177,7 +177,7 @@ document.addEventListener("click", () => {
         try {
             // 播放本地音乐
             musicPlayer.play();
-            document.querySelector('.music-tip').innerText = "🎵 音乐正在播放 🎵";
+            document.querySelector('.music-tip').innerText = "";
             isPlayed = true;
         } catch (err) {
             // 兼容部分浏览器的自动播放限制
