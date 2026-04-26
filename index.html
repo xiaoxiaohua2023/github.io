@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>妹丁生日快乐</title>
+    <title>休戚与共</title>
     <style>
         *{
             margin: 0;
@@ -94,8 +94,8 @@
 </head>
 <body>
     <div class="content-wrapper">
-        <h1>✨ 生日快乐 ✨</h1>
-        <div class="en-name">妹丁</div>
+        <h1>✨ 十七姻缘路，芳华婉如初 ✨</h1>
+        <div class="en-name">回岁忆月</div>
 
         <!-- 11张照片轮播（720px） -->
         <div class="carousel-container">
@@ -111,6 +111,18 @@
                 <img src="photo9.jpg" alt="照片9">
                 <img src="photo10.jpg" alt="照片10">
                 <img src="photo11.jpg" alt="照片11">
+                <img src="photo12.jpg" alt="照片12">
+                <img src="photo13.jpg" alt="照片13">
+                <img src="photo14.jpg" alt="照片14">
+                <img src="photo15.jpg" alt="照片15">
+                <img src="photo16.jpg" alt="照片16">
+                <img src="photo17.jpg" alt="照片17">
+                <img src="photo18.jpg" alt="照片18">
+                <img src="photo19.jpg" alt="照片19">
+                <img src="photo20.jpg" alt="照片20">
+                <img src="photo21.jpg" alt="照片21">
+                <img src="photo22.jpg" alt="照片22">
+                <img src="photo23.jpg" alt="照片23">
             </div>
         </div>
 
@@ -137,14 +149,14 @@
 // 日期显示
 function showTime(){
     let d = new Date();
-    document.getElementById("nowTime").innerText = "致我最爱的 Monica · " + d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
+    document.getElementById("nowTime").innerText = "一起走过 · " + d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
 }
 showTime();
 
 // 照片轮播逻辑（720px适配）
 const carousel = document.getElementById('carousel');
 let index = 0;
-const totalImages = 11;
+const totalImages = 23;
 const photoWidth = 720;
 
 function carouselLoop() {
